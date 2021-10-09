@@ -1,0 +1,25 @@
+{
+  "name": "regex-sasehack-f21",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wenjalan/regex-sasehack-f21.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wenjalan/regex-sasehack-f21/issues"
+  },
+  "homepage": "https://github.com/wenjalan/regex-sasehack-f21#readme",
+  "dependencies": {
+    "@tensorflow/tfjs": "^3.9.0",
+    "@tensorflow/tfjs-node": "^3.9.0",
+    "jquery-csv": "^1.0.21"
+  }
+}
