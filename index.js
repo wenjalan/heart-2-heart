@@ -8,8 +8,8 @@ const MODEL_DIRECTORY = 'file://./model/';
 const BUNDLE_DIRECTORY = './model/bundle.json';
 
 // training parameters
-const TRAIN_EPOCHS = 50;
-const TRAIN_BATCHES = 20;
+const TRAIN_EPOCHS = 100;
+const TRAIN_BATCHES = 10;
 
 // tests the model's accuracy
 async function testModel(model, testXs, testYs) {
@@ -53,14 +53,14 @@ function createModel(inputSize) {
     // dense input
     model.add(tf.layers.dense({
         inputShape: [inputSize],
-        units: 128,
+        units: 32,
         activation: 'softmax',
     }));
 
-    // // dense intermediate
-    // model.add(tf.layers.dense({
-    //     units: 256,
-    // }));
+    // dense intermediate
+    model.add(tf.layers.dense({
+        units: 32,
+    }));
 
     // dense output: 0 or 1
     model.add(tf.layers.dense({
