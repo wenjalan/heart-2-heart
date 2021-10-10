@@ -11,6 +11,15 @@ const BUNDLE_DIRECTORY = './model/bundle.json';
 const TRAIN_EPOCHS = 50;
 const TRAIN_BATCHES = 20;
 
+// tests the model's accuracy
+async function testModel(model, testXs, testYs) {
+    const result = await model.evaluate(testXs, testYs);
+    console.log('MODEL LOSS = ');
+    result[0].print();
+    console.log('MODEL ACCURACY = ');
+    result[1].print();
+}
+
 // main
 async function start() {
     // load training data
@@ -33,13 +42,7 @@ async function start() {
     console.log('Saved model');
 
     // evaluate?
-    const preds = model.predict(testXs);
-    const predsArray = await preds.array();
-    const actualArray = await testYs.array();
-    for (let i = 0; i < predsArray.length; i++) {
-        console.log('predicted: ' + predsArray[i] + ', actual: ' + actualArray[i]);
-    }
-
+    testModel(model, testXs, testYs);
 }
 
 // returns a model to fit data to
@@ -51,12 +54,13 @@ function createModel(inputSize) {
     model.add(tf.layers.dense({
         inputShape: [inputSize],
         units: 128,
+        activation: 'softmax',
     }));
 
-    // dense intermediate
-    model.add(tf.layers.dense({
-        units: 256,
-    }));
+    // // dense intermediate
+    // model.add(tf.layers.dense({
+    //     units: 256,
+    // }));
 
     // dense output: 0 or 1
     model.add(tf.layers.dense({
@@ -117,16 +121,16 @@ function toTensors(data) {
     const inMin = inputTensor.min(0);
     // inMax.print();
     // inMin.print();
-    const laMax = labelTensor.max();
-    const laMin = labelTensor.min();
+    // const laMax = labelTensor.max();
+    // const laMin = labelTensor.min();
 
     let normalIn = inputTensor.sub(inMin);
     let denom = inMax.sub(inMin);
     normalIn = normalIn.div(denom);
-    const normalLa = labelTensor.sub(laMin).div(laMax.sub(laMin));
+    // const normalLa = labelTensor.sub(laMin).div(laMax.sub(laMin));
 
     // return labels
-    return [normalIn, normalLa];
+    return [normalIn, labelTensor];
 }
 
 // starts the program
